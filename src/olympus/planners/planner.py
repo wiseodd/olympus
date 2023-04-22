@@ -39,7 +39,7 @@ def Planner(kind="ConjugateGradient", goal="minimize", param_space=None):
         planner = kind
     # if a custom class is passed, then that is the 'wrapper'
     elif issubclass(kind, AbstractPlanner):
-        planner = kind()
+        planner = kind(goal=goal)
 
     # load param_space already if provided, otherwise it will have to be set by self.set_param_space
     if param_space is not None:

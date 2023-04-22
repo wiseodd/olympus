@@ -8,6 +8,8 @@ from olympus.objects import Object, ParameterVector
 from olympus.scalarizers import Scalarizer
 from olympus.utils.data_transformer import cube_to_simpl
 
+import tqdm
+
 # ===============================================================================
 
 
@@ -99,7 +101,7 @@ class Evaluator(Object):
         """
 
         # Optimize: i.e. call the planner recommend method for max_iter times
-        for i in range(num_iter):
+        for i in tqdm.trange(num_iter):
 
             # NOTE: now we get 1 param at a time, a possible future expansion is
             #       to return batches
@@ -134,6 +136,9 @@ class Evaluator(Object):
 
             # get measurement from emulator/surface
             values = self.emulator.run(params, return_paramvector=True)
+
+            if isinstance(values, tuple):
+                values = values[0]
 
             # store parameter and measurement pair in campaign
             # TODO: we probably do not need this check for NoneType Campaign here... consider removing
