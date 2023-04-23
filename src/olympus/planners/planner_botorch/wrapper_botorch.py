@@ -267,17 +267,17 @@ class Botorch(AbstractPlanner):
                 results, _ = optimize_acqf(
                     acq_function=acqf,
                     bounds=bounds,
-                    num_restarts=5,
+                    num_restarts=200,
                     q=self.batch_size,
-                    raw_samples=5,
+                    raw_samples=1000,
                 )
             elif self.problem_type == "mixed":
                 results, _ = optimize_acqf_mixed(
                     acq_function=acqf,
                     bounds=bounds,
-                    num_restarts=5,
+                    num_restarts=200,
                     q=self.batch_size,
-                    raw_samples=5,
+                    raw_samples=1000,
                     fixed_features_list=[],
                 )
             elif self.problem_type == "fully_categorical":
