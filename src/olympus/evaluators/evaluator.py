@@ -143,9 +143,6 @@ class Evaluator(Object):
             else:
                 values = self.emulator.run(params, return_paramvector=True)
 
-            if isinstance(values, tuple):
-                values = values[0]
-
             # store parameter and measurement pair in campaign
             # TODO: we probably do not need this check for NoneType Campaign here... consider removing
             if self.campaign is not None:
