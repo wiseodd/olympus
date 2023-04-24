@@ -91,7 +91,9 @@ class Evaluator(Object):
 
         if self.campaign is not None:
             self.campaign.set_planner_specs(planner)
-            self.campaign.set_emulator_specs(emulator)
+            if self.emulator_type=='numerical':
+                self.campaign.set_emulator_specs(emulator)
+
 
     def optimize(self, num_iter=1):
         """Optimizes an objective for a fixed number of iterations.
@@ -135,7 +137,11 @@ class Evaluator(Object):
                 self.campaign.observations_to_str()
 
             # get measurement from emulator/surface
-            values = self.emulator.run(params, return_paramvector=True)
+            # first element is the parameter vector
+            if isinstance(self.emulator, Emulator):
+                values, _, __ = self.emulator.run(params, return_paramvector=True)
+            else:
+                values = self.emulator.run(params, return_paramvector=True)
 
             if isinstance(values, tuple):
                 values = values[0]
